@@ -1,0 +1,55 @@
+<div id="header">
+  <div class="user-info">
+    <%= render partial: 'account_links' %>
+  </div>
+</div>
+
+<p style="color: green"><%= notice %></p>
+
+<%= search_form_for @q do |f| %>
+  <%= f.label :text_cont, 'Pesquisar Texto' %>
+  <%= f.search_field :text_cont %>
+  <%= f.submit 'Pesquisar' %>
+<% end %>
+
+<div id="articles">
+  <% @articles.each do |article| %>
+    <div class="article">
+      <h2 style="font-size: 22px;"><%= article.title %></h2>
+      <p><strong>Texto:</strong> <%= article.text %></p>
+      <p><strong>Usuário:</strong> <%= article.user.email %></p>
+      <p><strong>Data:</strong> <%= article.user.created_at.strftime('%d %m %Y %H:%M:%S') %></p>
+      <div class="actions">
+        <%= link_to "Mostrar", article %>
+        <%= link_to "Editar", edit_article_path(article) %>
+        <%= link_to "Deletar", article, method: :delete, data: { confirm: 'Tem certeza?' } %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<%= link_to "Novo artigo", new_article_path %>
+<%= paginate @articles %>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchField = document.getElementById('search_field');
+
+        searchField.addEventListener('input', function() {
+            const searchText = this.value.trim();
+            const articles = document.querySelectorAll('#articles tbody tr');
+
+            articles.forEach(function(article) {
+                const title = article.querySelector('td:first-child').textContent.trim();
+
+                if (searchText === '' || title.toLowerCase().includes(searchText.toLowerCase())) {
+                    article.style.display = 'table-row';
+                } else {
+                    article.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
