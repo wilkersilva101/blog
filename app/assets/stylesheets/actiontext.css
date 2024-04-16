@@ -44,25 +44,40 @@
   margin-top: 50px; /* Ajuste o valor conforme necessário para dar espaço ao header */
 }
 
-.pagination {
+
+
+/* Paginação com Kaminari */
+
+#pagination {
   display: flex;
   justify-content: center;
+  margin-top: 20px;
+}
+
+#pagination .pagination li {
+  margin: 0 2px;
+}
+
+#pagination .pagination {
+  display: flex;
   list-style: none;
 }
 
-.pagination a, .pagination span {
-  padding: 5px 10px;
-  margin: 0 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  text-decoration: none;
+#pagination .pagination li a {
+  display: block;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  background-color: #f0f0f0;
   color: #333;
+  text-decoration: none;
+  border-radius: 50%;
 }
 
-.pagination .page.current {
-  background-color: #007bff;
-  color: #fff;
-}
+
+
+
 
 
 

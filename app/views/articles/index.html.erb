@@ -33,7 +33,10 @@
 </div>
 
 <%= link_to "Novo artigo", new_article_path %>
+<div id="pagination">
 <%= paginate @articles %>
+</div>
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
