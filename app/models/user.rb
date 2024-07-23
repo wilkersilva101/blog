@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  rolify
   has_many :articles, dependent: :destroy
   # Include default devise modules. Others available are:
   #  :lockable, :timeoutable, and :omniauthable
@@ -9,7 +10,6 @@ class User < ApplicationRecord
          :rememberable,
          :trackable, 
          :validatable
-
 
   def admin?
     self.admin

@@ -73,5 +73,4 @@ gem 'kaminari'
 gem 'ransack', github: 'activerecord-hackery/ransack', branch: 'main'
 gem 'byebug', '~> 11.1', '>= 11.1.3'
 gem 'cancancan'
-
-
+gem "rolify", "~> 6.0"

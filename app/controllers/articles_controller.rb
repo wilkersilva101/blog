@@ -22,6 +22,7 @@ class ArticlesController < ApplicationController
 
   def new
     # @article já é inicializado pelo CanCanCan
+    #
   end
 
   def edit
@@ -30,6 +31,7 @@ class ArticlesController < ApplicationController
 
   def create
     @article = current_user.articles.build(article_params) # Associar o usuário atual ao artigo
+    authorize @article
 
     respond_to do |format|
       if @article.save
