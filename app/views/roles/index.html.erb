@@ -1,0 +1,20 @@
+<h1>Gestão de Roles</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>Roles</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.email %></td>
+        <td><%= user.roles.pluck(:name).join(', ') %></td>
+        <td><%= link_to 'Editar Roles', edit_role_path(user) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,4 @@
+<div>
+  <%= f.label :role_ids, 'Roles' %><br>
+  <%= f.collection_check_boxes :role_ids, @roles, :id, :name %>
+</div>

@@ -1,0 +1,10 @@
+<h1>Editar Roles para <%= @user.email %></h1>
+
+<%= form_with model: @user, url: role_path(@user), method: :put do |f| %>
+  <%= render 'form', f: f %>
+  <div>
+    <%= f.submit 'Atualizar Roles' %>
+  </div>
+<% end %>
+
+<%= link_to 'Voltar', roles_path %>

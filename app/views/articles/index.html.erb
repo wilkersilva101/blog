@@ -1,6 +1,10 @@
 <div id="header">
   <div class="user-info">
     <%= render partial: 'account_links' %>
+    
+    <% if user_signed_in? && current_user.admin? %>
+      <%= link_to 'Gerenciar Roles', roles_path, class: 'admin-link' %>
+    <% end %>
   </div>
 </div>
 

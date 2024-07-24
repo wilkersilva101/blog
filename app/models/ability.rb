@@ -2,21 +2,19 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
+    Rails.logger.debug "Inicializando Ability com o usuário: #{user.inspect}"
     user ||= User.new # Garante que haja um usuário (mesmo que seja um usuário convidado)
 
-    if user.has_role?(:admin)
-      # Administrador pode fazer qualquer coisa com qualquer artigo
-      can :manage, Article
-    elsif user.has_role?(:read_and_write)
-      # Usuário com perfil de leitura e escrita pode ler e editar todos os artigos
-      can :read, Article
-      can :update, Article
-    elsif user.has_role?(:read_only)
-      # Usuário com perfil somente leitura pode apenas ler artigos
-      can :read, Article
-    else
-      # Usuário não logado ou sem perfil específico, só pode ver artigos públicos
-      can :read, Article
+    # Permissões para artigos
+    can :read, Article # Todos podem ler artigos
+
+    if user.has_role? :admin
+      can :manage, Article # Admin pode gerenciar todos os artigos
+    elsif user.has_role? :read_and_write
+      can :read, Article # Pode ler todos os artigos
+      can :update, Article # Pode editar todos os artigos
+    elsif user.has_role? :read_only
+      can :read, Article # Pode ler todos os artigos
     end
   end
 end
