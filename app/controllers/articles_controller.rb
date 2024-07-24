@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  before_action :authenticate_user!, except: %i[index show]
+  before_action :authenticate_user!, except: %i[show]
   before_action :set_article, only: %i[show edit update destroy]
   load_and_authorize_resource except: :index
 
@@ -8,26 +8,25 @@ class ArticlesController < ApplicationController
       @q = Article.ransack(params[:q])
       @articles = @q.result.page(params[:page]).per(3)
     else
-      @q = Article.ransack(params[:q])
-      @articles = @q.result.page(params[:page]).per(3)
+      redirect_to new_user_session_path, alert: "Você precisa estar logado para ver os artigos."
     end
   end
 
   def show
-    # A autorização já é tratada pelo CanCanCan
+    # A autorização é tratada pelo CanCanCan e pelo ApplicationController
   end
 
   def new
-    # @article já é inicializado pelo CanCanCan
+    authorize! :create, Article
   end
 
   def edit
-    # A autorização já é tratada pelo CanCanCan
+    # A autorização é tratada pelo CanCanCan e pelo ApplicationController
   end
 
   def create
     @article = current_user.articles.build(article_params)
-    authorize @article
+    authorize! :create, @article
 
     respond_to do |format|
       if @article.save
@@ -41,9 +40,11 @@ class ArticlesController < ApplicationController
   end
 
   def update
+    authorize! :update, @article
+
     respond_to do |format|
       if @article.update(article_params)
-        format.html { redirect_to article_url(@article), notice: "Artigo atualizado com sucesso." }
+        format.html { redirect_to @article, notice: "Artigo atualizado com sucesso." }
         format.json { render :show, status: :ok, location: @article }
       else
         format.html { render :edit, status: :unprocessable_entity }

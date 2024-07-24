@@ -5,14 +5,18 @@ class Ability
     user ||= User.new # Garante que haja um usuário (mesmo que seja um usuário convidado)
 
     if user.has_role?(:admin)
-      can :manage, :all # Administradores podem gerenciar todos os recursos
-    elsif user.has_role?(:read_only)
-      can :read, Article # Usuários com papel `read_only` podem apenas ler todos os artigos
+      # Administrador pode fazer qualquer coisa com qualquer artigo
+      can :manage, Article
     elsif user.has_role?(:read_and_write)
-      can :read, Article # Usuários com papel `read_and_write` podem ler todos os artigos
-      can :update, Article, user_id: user.id # Podem atualizar apenas seus próprios artigos
+      # Usuário com perfil de leitura e escrita pode ler e editar todos os artigos
+      can :read, Article
+      can :update, Article
+    elsif user.has_role?(:read_only)
+      # Usuário com perfil somente leitura pode apenas ler artigos
+      can :read, Article
     else
-      can :read, Article, user_id: user.id # Usuários não autenticados ou com outros papéis podem apenas ler seus próprios artigos
+      # Usuário não logado ou sem perfil específico, só pode ver artigos públicos
+      can :read, Article
     end
   end
 end

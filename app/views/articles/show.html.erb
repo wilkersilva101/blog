@@ -3,12 +3,11 @@
 <%= render @article %>
 
 <div>
+  <%= link_to "Back to articles", articles_path %>
   <% if can? :update, @article %>
     <%= link_to "Edit this article", edit_article_path(@article) %> |
   <% end %>
-  <%= link_to "Back to articles", articles_path %>
-
   <% if can? :destroy, @article %>
-    <%= button_to "Destroy this article", @article, method: :delete, data: { confirm: 'Are you sure?' } %>
+    <%= button_to "Destroy this article", @article, method: :delete, data: { confirm: 'Tem certeza?' } %>
   <% end %>
 </div>
