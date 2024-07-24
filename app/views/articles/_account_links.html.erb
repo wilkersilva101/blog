@@ -1,4 +1,3 @@
-
 <% if user_signed_in? %>
   <div class="dropdown">
     <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -9,9 +8,9 @@
         <%= link_to "Editar Perfil", edit_user_registration_path, class: "dropdown-item" %>
       </li>
       <li>
-        <%= button_to "Sair", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
+        <%= button_to "Sair", destroy_user_session_path, method: :delete, class: "dropdown-item", data: { confirm: 'Tem certeza que deseja sair?' } %>     
       </li>
-    </ul>
+     </ul>
   </div>
 <% else %>
   <div class="d-flex justify-content-end">
@@ -19,4 +18,3 @@
     <%= link_to "Cadastre-se", new_user_registration_path, class: "btn btn-sm btn-primary" %>
   </div>
 <% end %>
-

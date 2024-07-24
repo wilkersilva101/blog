@@ -3,7 +3,7 @@
     <%= render partial: 'account_links' %>
     
     <% if user_signed_in? && current_user.admin? %>
-      <%= link_to 'Gerenciar Roles', roles_path, class: 'admin-link' %>
+      <%= link_to 'Gerenciar Usuarios', roles_path, class: 'btn btn-primary' %>
     <% end %>
   </div>
 </div>
@@ -37,7 +37,7 @@
     <% end %>
   </div>
 
-  <% if can? :create, Article %>
+  <% if user_signed_in? %>
     <%= link_to "Novo artigo", new_article_path %>
   <% end %>
 
