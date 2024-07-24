@@ -1,19 +1,16 @@
 class ArticlesController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :set_article, only: %i[show edit update destroy]
-  load_and_authorize_resource except: :index  # CanCanCan carrega o recurso e verifica as permissões automaticamente
-
-  rescue_from CanCan::AccessDenied do |exception|
-    redirect_to root_path, alert: exception.message
-  end
+  load_and_authorize_resource except: :index
 
   def index
-    if user_signed_in?  # Verifica se o usuário está logado
-      @q = current_user.articles.ransack(params[:q])  # Filtra apenas os artigos do usuário atual
+    if user_signed_in?
+      @q = Article.ransack(params[:q])
+      @articles = @q.result.page(params[:page]).per(3)
     else
       @q = Article.ransack(params[:q])
+      @articles = @q.result.page(params[:page]).per(3)
     end
-    @articles = @q.result.page(params[:page]).per(3)
   end
 
   def show
@@ -22,7 +19,6 @@ class ArticlesController < ApplicationController
 
   def new
     # @article já é inicializado pelo CanCanCan
-    #
   end
 
   def edit
@@ -30,7 +26,7 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    @article = current_user.articles.build(article_params) # Associar o usuário atual ao artigo
+    @article = current_user.articles.build(article_params)
     authorize @article
 
     respond_to do |format|
@@ -57,6 +53,7 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
+    authorize! :destroy, @article
     @article.destroy!
     respond_to do |format|
       format.html { redirect_to articles_url, notice: "Artigo excluído com sucesso." }

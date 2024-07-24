@@ -8,4 +8,3 @@ class Article < ApplicationRecord
     ["created_at", "id", "id_value", "text", "title", "updated_at", "user_id"]
   end
 end
-

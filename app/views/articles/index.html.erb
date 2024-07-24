@@ -32,11 +32,13 @@
   <% end %>
 </div>
 
-<%= link_to "Novo artigo", new_article_path %>
-<div id="pagination">
-<%= paginate @articles %>
-</div>
+<% if can? :create, Article %>
+  <%= link_to "Novo artigo", new_article_path %>
+<% end %>
 
+<div id="pagination">
+  <%= paginate @articles %>
+</div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
