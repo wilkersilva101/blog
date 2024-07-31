@@ -1,7 +1,13 @@
 Rails.application.routes.draw do
+  get 'users/index'
+  get 'users/show'
+  get 'users/new'
+  get 'users/edit'
   devise_for :users
 
   resources :articles
+  resources :users, only: [:index, :show, :new, :create, :edit, :update]
+  resources :roles
 
   # Rotas para o controlador de roles
   resources :roles, only: [:index, :edit, :update]

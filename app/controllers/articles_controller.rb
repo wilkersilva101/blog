@@ -1,15 +1,12 @@
 class ArticlesController < ApplicationController
   before_action :authenticate_user!, except: %i[show]
   before_action :set_article, only: %i[show edit update destroy]
+  before_action :check_user_profile, only: %i[index]
   load_and_authorize_resource except: :index
 
   def index
-    if user_signed_in?
-      @q = Article.ransack(params[:q])
-      @articles = @q.result.page(params[:page]).per(3)
-    else
-      redirect_to new_user_session_path, alert: "Você precisa estar logado para ver os artigos."
-    end
+    @q = Article.ransack(params[:q])
+    @articles = @q.result.page(params[:page]).per(3)
   end
 
   def show
@@ -71,5 +68,13 @@ class ArticlesController < ApplicationController
 
   def article_params
     params.require(:article).permit(:title, :text)
+  end
+
+  def check_user_profile
+    # Verifica se o usuário está logado antes de verificar o perfil
+    if user_signed_in? && !current_user.roles.exists?
+      flash[:alert] = "Você precisa solicitar um perfil ao administrador para ver os artigos."
+      redirect_to root_path unless request.path == root_path
+    end
   end
 end
