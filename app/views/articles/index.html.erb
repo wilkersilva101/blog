@@ -1,0 +1,61 @@
+<div id="header">
+  <div class="user-info">
+    <% if user_signed_in? %>
+      <p>Bem-vindo, <%= current_user.email %>!</p>
+    <% end %>
+    
+    <%= render partial: 'account_links' %>
+    
+    <% if user_signed_in? && current_user.admin? %>
+      <%= link_to 'Gerenciar Usuários', users_path, class: 'btn btn-primary' %>
+      <%= link_to 'Gerenciar Perfil', roles_path, class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+  </div>
+
+<% if notice %>
+  <p style="color: green"><%= notice %></p>
+<% end %>
+
+<% if alert %>
+  <p style="color: red"><%= alert %></p>
+<% end %>
+
+<% if user_signed_in? %>
+  <% if current_user.roles.exists? %>
+    <%= search_form_for @q do |f| %>
+      <%= f.label :text_cont, 'Pesquisar Texto' %>
+      <%= f.search_field :text_cont %>
+      <%= f.submit 'Pesquisar' %>
+    <% end %>
+
+    <div id="articles">
+      <% @articles.each do |article| %>
+        <div class="article">
+          <h2 style="font-size: 22px;"><%= article.title %></h2>
+          <p><strong>Texto:</strong> <%= article.text %></p>
+          <p><strong>Usuário:</strong> <%= article.user.email %></p>
+          <p><strong>Data:</strong> <%= article.created_at.in_time_zone('Brasilia').strftime('%d %m %Y %H:%M:%S') %></p>
+          <div class="actions">
+            <%= link_to "Mostrar", article %>
+            <% if can? :update, article %>
+              <%= link_to "Editar", edit_article_path(article) %>
+            <% end %>
+            <% if can? :destroy, article %>
+              <%= link_to "Deletar", article, method: :delete, data: { confirm: 'Tem certeza?' } %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <%= link_to "Novo artigo", new_article_path %>
+
+    <div id="pagination">
+      <%= paginate @articles %>
+    </div>
+  <% else %>
+    <p>Você precisa solicitar um perfil ao administrador para ver os artigos.</p>
+  <% end %>
+<% else %>
+ <% end %>

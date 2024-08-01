@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Blog</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <link rel="stylesheet" href="https://cdn.simplecss.org/simple.css">
+
+  <!-- Estilos para o tema do Twitter -->
+  <style>
+      body {
+          font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+          background-color: #f5f8fa;
+          color: #14171a;
+          margin: 0;
+          padding: 0;
+      }
+
+      .container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 20px;
+          display: grid;
+          grid-template-columns: 1fr 8fr 1fr; /* Colunas: 1 unidade para a esquerda, 8 unidades para o conteúdo, 1 unidade para a direita */
+      }
+
+      .header {
+          grid-column: 1 / -1; /* Ocupa todas as colunas */
+          background-color: #1da1f2;
+          color: white;
+          padding: 20px;
+          text-align: center;
+      }
+
+      .content {
+          grid-column: 2; /* Conteúdo na coluna do meio */
+          background-color: white;
+          border-radius: 30px;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+          padding: 20px;
+          margin-top: 20px;
+      }
+
+      .flash-messages {
+          grid-column: 2; /* Mensagens flash na coluna do meio */
+          margin-top: 20px;
+      }
+
+      .flash-messages .alert {
+          padding: 10px;
+          margin-bottom: 10px;
+          border-radius: 5px;
+      }
+
+      .flash-messages .alert-success {
+          background-color: #d4edda;
+          color: #155724;
+          border: 1px solid #c3e6cb;
+      }
+
+      .flash-messages .alert-danger {
+          background-color: #f8d7da;
+          color: #721c24;
+          border: 1px solid #f5c6cb;
+      }
+
+      .tweet {
+          border-bottom: 1px solid #e1e8ed;
+          padding: 10px 0;
+      }
+
+      .tweet:last-child {
+          border-bottom: none;
+      }
+
+      .tweet .user {
+          font-weight: bold;
+          color: #1da1f2;
+      }
+
+      .tweet .timestamp {
+          color: #657786;
+          font-size: 0.8em;
+      }
+
+      .tweet .message {
+          margin-top: 5px;
+      }
+
+      /* Estilos para artigos (tweets) */
+      .article {
+          border-bottom: 1px solid #e1e8ed;
+          padding: 10px 0;
+      }
+
+      .article:last-child {
+          border-bottom: none;
+      }
+
+      .article .author {
+          font-weight: bold;
+          color: #1da1f2;
+      }
+
+      .article .date {
+          color: #657786;
+          font-size: 0.8em;
+      }
+
+      .article .content {
+          margin-top: 5px;
+      }
+  </style>
+
+  <%= javascript_importmap_tags %>
+</head>
+
+<body>
+<div class="header">
+  <h1>Artigos</h1>
+</div>
+
+<div class="container">
+  <div class="left-column">
+    <!-- Conteúdo para a coluna esquerda -->
+  </div>
+
+  <div class="content">
+    <div class="flash-messages">
+      <% flash.each do |key, message| %>
+        <div class="alert alert-<%= key == 'alert' ? 'danger' : 'success' %>">
+          <%= message %>
+        </div>
+      <% end %>
+    </div>
+
+    <%= yield %>
+  </div>
+
+  <div class="right-column">
+    <!-- Conteúdo para a coluna direita -->
+  </div>
+</div>
+</body>
+</html>
