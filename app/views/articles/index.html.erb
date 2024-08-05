@@ -11,7 +11,7 @@
       <%= link_to 'Gerenciar Perfil', roles_path, class: 'btn btn-primary' %>
     <% end %>
   </div>
-  </div>
+</div>
 
 <% if notice %>
   <p style="color: green"><%= notice %></p>
@@ -34,7 +34,11 @@
         <div class="article">
           <h2 style="font-size: 22px;"><%= article.title %></h2>
           <p><strong>Texto:</strong> <%= article.text %></p>
-          <p><strong>Usuário:</strong> <%= article.user.email %></p>
+          <% if article.user.present? %>
+            <p><strong>Usuário:</strong> <%= article.user.email %></p>
+          <% else %>
+            <p><strong>Usuário:</strong> Não disponível</p>
+          <% end %>
           <p><strong>Data:</strong> <%= article.created_at.in_time_zone('Brasilia').strftime('%d %m %Y %H:%M:%S') %></p>
           <div class="actions">
             <%= link_to "Mostrar", article %>
@@ -58,4 +62,4 @@
     <p>Você precisa solicitar um perfil ao administrador para ver os artigos.</p>
   <% end %>
 <% else %>
- <% end %>
+<% end %>
