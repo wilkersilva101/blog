@@ -43,7 +43,7 @@
                   <%= link_to "Editar", edit_article_path(article) %>
                 <% end %>
                 <% if can? :destroy, article %>
-                  <%= link_to "Deletar", article, method: :delete, data: { confirm: 'Tem certeza?' } %>
+                  <%= link_to "Excluir", article, method: :delete, data: { confirm: 'Tem certeza?' } %>
                 <% end %>
               </div>
             </div>
