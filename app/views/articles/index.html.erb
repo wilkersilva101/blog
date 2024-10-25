@@ -53,7 +53,7 @@
         <%= link_to "Novo artigo", new_article_path, class: 'btn btn-primary' %>
 
         <div id="pagination">
-          
+        <%= paginate @articles %>               
         </div>
       <% else %>
         <p>Você precisa solicitar um perfil ao administrador para ver os artigos.</p>

@@ -4,10 +4,17 @@ class ArticlesController < ApplicationController
   before_action :check_user_profile, only: %i[index]
   load_and_authorize_resource except: :index
 
+
   def index
-    @q = Article.ransack(params[:q])
-    @articles = @q.result.page(params[:page]).per(3)
-  end
+  search_params = params[:q] || {}
+  @q = Article.ransack(
+    combinator: 'or',
+    title_cont: search_params[:text_cont],
+    text_cont: search_params[:text_cont]
+  )
+  @articles = @q.result.page(params[:page]).per(3)
+end
+
 
   def show
     # A autorização é tratada pelo CanCanCan e pelo ApplicationController

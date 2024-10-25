@@ -92,3 +92,39 @@
 .btn-primary:hover {
     background-color: #0056b3;
 }
+
+/* app/assets/stylesheets/application.css */
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+}
+
+.pagination {
+  display: flex;
+  list-style: none;
+  padding: 0;
+}
+
+.pagination li {
+  margin: 0 5px;
+}
+
+.pagination a, .pagination span {
+  padding: 5px 10px;
+  text-decoration: none;
+  border: 1px solid #ddd;
+  color: #007bff;
+}
+
+.pagination a:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.pagination .current {
+  background-color: #007bff;
+  color: white;
+  border: 1px solid #007bff;
+}
