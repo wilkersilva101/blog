@@ -26,6 +26,9 @@
   <div class="column middle-column">
     <% if user_signed_in? %>
       <% if current_user.roles.exists? %>
+        <h1 class="centered-title">Listar Artigos</h1>
+        <div class="blue-line"></div>
+
         <div id="articles">
           <% @articles.each do |article| %>
             <div class="article">
@@ -38,12 +41,12 @@
               <% end %>
               <p><strong>Data:</strong> <%= article.created_at.in_time_zone('Brasilia').strftime('%d %m %Y %H:%M:%S') %></p>
               <div class="actions">
-                <%= link_to "Mostrar", article %>
+                <%= link_to "Mostrar", article, class: "link-button" %>
                 <% if can? :update, article %>
-                  <%= link_to "Editar", edit_article_path(article) %>
+                  <%= link_to "Editar", edit_article_path(article), class: "link-button" %>
                 <% end %>
                 <% if can? :destroy, article %>
-                  <%= link_to "Excluir", article, method: :delete, data: { confirm: 'Tem certeza?' } %>
+                  <%= link_to "Excluir", article, method: :delete, data: { confirm: 'Tem certeza?' }, class: "link-button" %>
                 <% end %>
               </div>
             </div>
@@ -53,7 +56,7 @@
         <%= link_to "Novo artigo", new_article_path, class: 'btn btn-primary' %>
 
         <div id="pagination">
-        <%= paginate @articles %>               
+          <%= paginate @articles %>               
         </div>
       <% else %>
         <p>Você precisa solicitar um perfil ao administrador para ver os artigos.</p>

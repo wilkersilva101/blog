@@ -1,9 +1,12 @@
-<h1>Criar Artigo</h1>
+<div class="view-container">
+  <h1 class="centered-title">Criar Artigo</h1>
+  <div class="blue-line"></div>
 
-<%= render "form", article: @article %>
+  <%= render "form", article: @article %>
 
-<br>
+  <br>
 
-<div>
-  <%= link_to "Listar Artigos", articles_path %>
+  <div class="action-buttons">
+    <%= link_to "Listar Artigos", articles_path, class: "link-button" %>
+  </div>
 </div>
