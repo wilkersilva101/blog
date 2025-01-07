@@ -12,7 +12,7 @@ class RolesController < ApplicationController
 
   def update
     if @user.update(user_params)
-      redirect_to roles_path, notice: "Roles atualizadas com sucesso."
+      redirect_to roles_path, notice: "Permissões atualizadas com sucesso."
     else
       render :edit
     end
