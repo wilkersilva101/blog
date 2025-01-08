@@ -9,8 +9,8 @@ class ArticlesController < ApplicationController
   search_params = params[:q] || {}
   @q = Article.ransack(
     combinator: 'or',
-    title_cont: search_params[:text_cont],
-    text_cont: search_params[:text_cont]
+    title_cont: search_params[:title_cont]
+
   )
   @articles = @q.result.page(params[:page]).per(3)
 end
