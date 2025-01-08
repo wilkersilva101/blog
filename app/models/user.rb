@@ -1,8 +1,12 @@
 class User < ApplicationRecord
+ # rolify :role_cname => 'UserRole'
   rolify
   has_many :articles, dependent: :destroy
-  # Include default devise modules. Others available are:
-  #  :lockable, :timeoutable, and :omniauthable
+
+  # Validações
+  validates :name, presence: true
+
+  # Módulos do Devise
   devise :database_authenticatable,
          :registerable,
          :recoverable,
@@ -10,20 +14,21 @@ class User < ApplicationRecord
          :trackable,
          :validatable
 
+  # Verifica se o usuário tem um papel específico
+  def has_role?(role_name)
+    roles.exists?(name: role_name)
+  end
+
+  # Métodos para verificar papéis específicos
   def admin?
-    roles.exists?(name: 'admin')
+    has_role?(:admin)
   end
 
   def read_and_write?
-    roles.exists?(name: 'read_and_write')
+    has_role?(:read_and_write)
   end
 
   def read_only?
-    roles.exists?(name: 'read_only')
-  end
-
-  # Verifica se o usuário tem algum papel específico
-  def has_role?(role_name)
-    roles.exists?(name: role_name)
+    has_role?(:read_only)
   end
 end
