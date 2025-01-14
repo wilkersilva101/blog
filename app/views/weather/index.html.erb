@@ -1,0 +1,26 @@
+<h1>Previsão do Tempo</h1>
+
+<% if flash[:alert] %>
+  <div class="alert alert-danger"><%= flash[:alert] %></div>
+<% end %>
+
+<% if @weather %>
+  <p>Cidade: <%= @weather['results']['city'] %></p>
+  <p>Temperatura: <%= @weather['results']['temp'] %>°C</p>
+  <p>Condição: <%= @weather['results']['description'] %></p>
+  <%# Exiba outros dados conforme necessário %>
+<% end %>
+
+<%= form_with url: weather_index_path, method: :get do |form| %>
+  <%= form.label :city, "Cidade:" %>
+  <%= form.text_field :city %>
+  <%= form.submit "Buscar" %>
+<% end %>
+
+<%= form_with url: weather_index_path, method: :get do |form| %>
+  <%= form.label :latitude, "Latitude:" %>
+  <%= form.text_field :latitude %>
+  <%= form.label :longitude, "Longitude:" %>
+  <%= form.text_field :longitude %>
+  <%= form.submit "Buscar por Geolocalização" %>
+<% end %>

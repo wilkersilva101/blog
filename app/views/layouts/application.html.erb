@@ -119,30 +119,31 @@
 </head>
 
 <body>
-<div class="header">
-  <h1>Artigos</h1>
-</div>
-
-<div class="container">
-  <div class="left-column">
-    <!-- Conteúdo para a coluna esquerda -->
+  <div class="header">
+    <h1>Artigos</h1>
+    <%= render "shared/weather" %>
+    
   </div>
 
-  <div class="content">
-    <div class="flash-messages">
-      <% flash.each do |key, message| %>
-        <div class="alert alert-<%= key == 'alert' ? 'danger' : 'success' %>">
-          <%= message %>
-        </div>
-      <% end %>
+  <div class="container">
+    <div class="left-column">
+      <!-- Conteúdo para a coluna esquerda -->
     </div>
 
-    <%= yield %>
-  </div>
+    <div class="content">
+      <div class="flash-messages">
+        <% flash.each do |key, message| %>
+          <div class="alert alert-<%= key == 'alert' ? 'danger' : 'success' %>">
+            <%= message %>
+          </div>
+        <% end %>
+      </div>
+  
+      <%= yield %>
+    </div>
 
-  <div class="right-column">
-    <!-- Conteúdo para a coluna direita -->
+    <div class="right-column">
+         </div>
   </div>
-</div>
 </body>
 </html>

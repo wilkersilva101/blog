@@ -1,0 +1,55 @@
+<!-- app/views/shared/_weather.html.erb -->
+<h1></h1>
+
+<% if flash[:alert] %>
+  <div class="alert alert-danger"><%= flash[:alert] %></div>
+<% end %>
+
+<div id="weather-info">
+  <% if @weather %>
+    <p>Cidade: <%= @weather['results']['city'] %></p>
+    <p>Temperatura: <%= @weather['results']['temp'] %>°C</p>
+    <p>Condição: <%= @weather['results']['description'] %></p>
+    <%# Exiba outros dados conforme necessário %>
+  <% else %>
+    <p>Carregando informações meteorológicas...</p>
+  <% end %>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        // Enviar as coordenadas para o servidor via AJAX
+        fetch(`/weathers?latitude=${latitude}&longitude=${longitude}`, {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+          }
+        }).then(response => response.json())
+          .then(data => {
+            const weatherInfo = document.getElementById('weather-info');
+            if (data.weather) {
+              weatherInfo.innerHTML = `
+                <p>Cidade: ${data.weather.results.city}</p>
+                <p>Temperatura: ${data.weather.results.temp}°C</p>
+                <p>Condição: ${data.weather.results.description}</p>
+              `;
+            } else {
+              weatherInfo.innerHTML = `<p>${data.error || 'Não foi possível obter informações meteorológicas.'}</p>`;
+            }
+          });
+      }, function(error) {
+        const weatherInfo = document.getElementById('weather-info');
+        weatherInfo.innerHTML = `<p>Erro ao obter localização: ${error.message}</p>`;
+      });
+    } else {
+      const weatherInfo = document.getElementById('weather-info');
+      weatherInfo.innerHTML = `<p>Geolocalização não suportada pelo navegador.</p>`;
+    }
+  });
+</script>

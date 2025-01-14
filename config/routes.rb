@@ -1,20 +1,19 @@
 Rails.application.routes.draw do
-
+  # Rotas existentes
   devise_for :users, path: 'u'
-
   resources :articles
   resources :users
   resources :roles
 
-  # Rotas para o controlador de roles
-  resources :roles, only: [:index, :edit, :update]
+  # Rota para o WeathersController (sem namespace)
+  resources :weathers, only: [:index]
 
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  # Ou, se estiver usando namespace:
+  # namespace :blog do
+  #   resources :weathers, only: [:index]
+  # end
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Defines the root path route ("/")
   root "articles#index"
 end

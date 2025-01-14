@@ -75,6 +75,7 @@ gem 'byebug', '~> 11.1', '>= 11.1.3'
 gem 'cancancan'
 gem "rolify", "~> 6.0"
 gem 'kaminari-bootstrap'
+gem 'httparty'
 
 group :development, :test do
   gem 'rspec-rails', '~> 7.1'
